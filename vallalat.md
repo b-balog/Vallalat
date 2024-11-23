@@ -36,11 +36,11 @@ Tehát a `Division` és `Employee` között, illetve `Department` és `Employee`
 `Project` és `Employee` között a `manager` kapcsolat pedig `1:N`-hez. 
 
 Az `Employee` továbbá rendelkezik egy `works_on` kapcsolattal a `Project` egyeddel, 
-illetve egy `works_in` kapcsolattal a `Department` egyeddel. 
+illetve egy `works_at` kapcsolattal a `Department` egyeddel. 
 A `works_on` egy `N:M`-hez kapcsolat, mivel egy `Employee` több 
 `Project`-en is dolgozhat, illetve egy `Project`-en több `Employee` is dolgozhat. 
 Emellett rendelkezik egy `report` (beszámoló) attribútummal.
-A `works_in` egy `1:N`-hez kapcsolat, mivel egy `Employee` csak egy `Department`-ben dolgozhat, viszont egy `Department`-ben
+A `works_at` egy `1:N`-hez kapcsolat, mivel egy `Employee` csak egy `Department`-ben dolgozhat, viszont egy `Department`-ben
 több `Employee` is dolgozhat. Emellett rendelkezik egy `position` (beosztás) attribútummal.
 
 A `Department` és a `Division` között van egy `1:N` hez `belongs` kapcsolat. Egy `Department` csak egy `Division`-be tartozhat
@@ -53,6 +53,22 @@ A `Department` és a `Division` között van egy `1:N` hez `belongs` kapcsolat. 
 # Relációs adatbázisséma
 
 \noindent\rule{\textwidth}{0.4pt}
+
+
+
+EMPLOYEES(\underline{id} , password, name, email, salary, phone, admin)
+
+DEPARTMENTS(\underline{department\_id} , name, task, manager_id, division_id)
+
+DIVISIONS(\underline{division\_id} , name, task, manager_id)
+
+PROJECTS(\underline{project\_id} , name, deadline, description, manager_id)
+
+WORKS_AT(\underline{employee\_id}, department_id, position)
+
+WORKS_ON(\underline{employee\_id}, \underline{project\_id}, report)
+
+
 
 # Normalizálás
 
