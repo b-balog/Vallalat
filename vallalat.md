@@ -2,6 +2,8 @@
 title: "Vállalat"
 author: "Adatbázisok kötelező feladat"
 header-includes: |
+  \usepackage{booktabs}
+  \renewcommand{\toprule}{}
   \usepackage{titling}
   \pretitle{\begin{center}\Huge\bfseries}
   \usepackage{fancyhdr}
@@ -58,7 +60,7 @@ A `Department` és a `Division` között van egy `1:N` hez `belongs` kapcsolat. 
 
 
 
-`EMPLOYEES`(\underline{employee\_id}, password, name, email, salary, phone, admin)
+`EMPLOYEES`(\underline{employee\_id}, password, name, email, salary, phone)
 
 `DEPARTMENTS`(\underline{department\_id}, name, task, manager_id, division_id)
 
@@ -95,6 +97,51 @@ A `WORKS_ON` tábla is `3NF`-ben van, mivel csak egy darab másdolagos attribút
 # Táblatervek
 \vspace{-0.8cm}
 \noindent\rule{\textwidth}{0.4pt}
+
+| `EMPLOYEES`   |                |                                                            |
+|---------------|----------------|------------------------------------------------------------|
+| `employee_id` | `INT`          | A dolgozó céges azonosítója, **kulcs**                     |
+| `password`    | `VARCHAR(128)` | A dolgozó belépési jelszava (hashelve, és sózva lehetőleg) |
+| `name`        | `VARCHAR(100)` | A dolgozó teljes neve                                      |
+| `email`       | `VARCHAR(100)` | A dolgozó munkahelyi email címe                            |
+| `salary`      | `INT`          | A dolgozó bére                                             |
+| `phone`       | `INT`          | A dolgozó telefonszáma                                     |
+
+| `DEPARTMENTS`   |                |                                                               |
+|-----------------|----------------|---------------------------------------------------------------|
+| `department_id` | `INT`          | A részleg azonosítója, **kulcs**                              |
+| `name`          | `VARCHAR(100)` | A részleg neve                                                |
+| `task`          | `TEXT`         | A részleg feladata                                            |
+| `manager_id`    | `INT`          | A részleg vezetője. Külső kulcs az `EMPLOYEES` tábla kulcsára |
+| `division_id`   | `INT`          | A részleg osztálya. Külső kulcs a `DIVISIONS` tábla kulcsára  |
+
+| `DIVISIONS`   |                |                                                                |
+|---------------|----------------|----------------------------------------------------------------|
+| `division_id` | `INT`          | Az osztály azonosítója, **kulcs**                              |
+| `name`        | `VARCHAR(100)` | Az osztály neve                                                |
+| `task`        | `TEXT`         | Az osztály feladata                                            |
+| `manager_id`  | `INT`          | Az osztály vezetője. Külső kulcs az `EMPLOYEES` tábla kulcsára |
+
+| `PROJECTS`    |                |                                                               |
+|---------------|----------------|---------------------------------------------------------------|
+| `project_id`  | `INT`          | A projekt azonosítója, **kulcs**                              |
+| `name`        | `VARCHAR(100)` | A projekt neve                                                |
+| `deadline`    | `DATETIME`     | A projekt határideje, napra és órára pontosan                 |
+| `description` | `TEXT`         | A projekt leírása                                             |
+| `manager_id`  | `INT`          | A projekt vezetője. Külső kulcs az `EMPLOYEES` tábla kulcsára |
+
+| `WORKS_AT`      |               |                                                      |
+|-----------------|---------------|------------------------------------------------------|
+| `employee_id`   | `INT`         | Külső kulcs az `EMPLOYEES` tábla kulcsára, **kulcs** |
+| `department_id` | `INT`         | Külső kulcs a `DEPARTMENTS` tábla kulcsára           |
+| `position`      | `VARCHAR(40)` | A dolgozó beosztása                                  |
+
+| `WORKS_ON`    |        |                                                      |
+|---------------|--------|------------------------------------------------------|
+| `employee_id` | `INT`  | Külső kulcs az `EMPLOYEES` tábla kulcsára, **kulcs** |
+| `project_id`  | `INT`  | Külső kulcs a `PROJECTS` tábla kulcsára, **kulcs**   |
+| `report`      | `TEXT` | A dolgozó beszámolója a projektről                   |
+
 
 
 # Összetett lekérdezés
