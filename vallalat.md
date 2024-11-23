@@ -9,7 +9,7 @@ header-includes: |
   \renewcommand{\headrulewidth}{0.4pt}
   \usepackage{etoolbox}
   \AtBeginDocument{\thispagestyle{fancy}}
-geometry: a4paper,textwidth=16cm
+geometry: a4paper,textwidth=16cm, bottom=3cm
 mainfont: "Times New Roman"
 output: pdf_document
 ---
@@ -26,8 +26,27 @@ projektekhez, amelyekben részt vesz vagy vett.
 
 ![E-K diagram](E-K.png)
 
-A Department (részleg), Division (osztály) és Project gyenge egyedek. 
-Az azonosításukra a manager-ük id-ját fogjuk használni.
+Az `Employee` egyednek az `id` (céges azonosító) lesz a kulcs attribútuma. 
+A `Department` (részleg), `Division` (osztály) és `Project` egyedeknél a `name` attribútum lehetne kulcs, 
+viszont el szeretném kerülni a string kulcsokat, így bevezetek hozzájuk egy `id` attribútumot, ami kulcs attribútum lesz.
+Mindegyiküket a `manager` kapcsolat összeköti az `Employee` egyeddel. Mind a `Project`-nek, 
+`Department`-nek és `Division`-nek csak egy darab `manager`-e lehet. egy `Employee` csak egy `Division`-nek, és csak egy
+`Department`-nek lehet a `manager`-e, míg `Project`-ek közl többnek is. 
+Tehát a `Division` és `Employee` között, illetve `Department` és `Employee` között a `manager` kapcsolat `1:1`-hez, a 
+`Project` és `Employee` között a `manager` kapcsolat pedig `1:N`-hez. 
+
+Az `Employee` továbbá rendelkezik egy `works_on` kapcsolattal a `Project` egyeddel, 
+illetve egy `works_in` kapcsolattal a `Department` egyeddel. 
+A `works_on` egy `N:M`-hez kapcsolat, mivel egy `Employee` több 
+`Project`-en is dolgozhat, illetve egy `Project`-en több `Employee` is dolgozhat. 
+Emellett rendelkezik egy `report` (beszámoló) attribútummal.
+A `works_in` egy `1:N`-hez kapcsolat, mivel egy `Employee` csak egy `Department`-ben dolgozhat, viszont egy `Department`-ben
+több `Employee` is dolgozhat. Emellett rendelkezik egy `position` (beosztás) attribútummal.
+
+A `Department` és a `Division` között van egy `1:N` hez `belongs` kapcsolat. Egy `Department` csak egy `Division`-be tartozhat
+, viszont egy `Division`-be több `Department`-is tartozhat.
+
+
 
 
 
