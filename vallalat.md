@@ -2,6 +2,8 @@
 title: "Vállalat"
 author: "Adatbázisok kötelező feladat"
 header-includes: |
+  \usepackage{titling}
+  \pretitle{\begin{center}\Huge\bfseries}
   \usepackage{fancyhdr}
   \pagestyle{fancy}
   \fancyhf{}
@@ -21,7 +23,7 @@ adatokat, a többi dolgozó csak megtekintheti azokat, és beszámolót írhat a
 projektekhez, amelyekben részt vesz vagy vett.
 
 # Egyed-kapcsolat modell
-
+\vspace{-0.8cm}
 \noindent\rule{\textwidth}{0.4pt}
 
 ![E-K diagram](E-K.png)
@@ -51,33 +53,54 @@ A `Department` és a `Division` között van egy `1:N` hez `belongs` kapcsolat. 
 
 
 # Relációs adatbázisséma
-
+\vspace{-0.8cm}
 \noindent\rule{\textwidth}{0.4pt}
 
 
 
-EMPLOYEES(\underline{id} , password, name, email, salary, phone, admin)
+`EMPLOYEES`(\underline{employee\_id}, password, name, email, salary, phone, admin)
 
-DEPARTMENTS(\underline{department\_id} , name, task, manager_id, division_id)
+`DEPARTMENTS`(\underline{department\_id}, name, task, manager_id, division_id)
 
-DIVISIONS(\underline{division\_id} , name, task, manager_id)
+`DIVISIONS`(\underline{division\_id}, name, task, manager_id)
 
-PROJECTS(\underline{project\_id} , name, deadline, description, manager_id)
+`PROJECTS`(\underline{project\_id}, name, deadline, description, manager_id)
 
-WORKS_AT(\underline{employee\_id}, department_id, position)
+`WORKS_AT`(\underline{employee\_id}, department_id, position)
 
-WORKS_ON(\underline{employee\_id}, \underline{project\_id}, report)
+`WORKS_ON`(\underline{employee\_id}, \underline{project\_id}, report)
 
 
 
 # Normalizálás
+\vspace{-0.8cm}
+\noindent\rule{\textwidth}{0.5pt}
 
+Az `1NF` teljesül minden táblára, mivel mindegyik táblában mindegyik attribútum atomi.
+
+A `2NF` teljesül az `EMPLOYEES`, `DEPARTMENTS`, `DIVISIONS`, `PROJECTS` és `WORKS_AT` táblákra, mivel egy elemű a kulcsuk. 
+A `2NF` teljesül a `WORKS_ON` táblára, mert az egyedüli másodlagos attribútum (`report`) teljesen függ mindkét kulcstól.
+
+A `3NF` teljesül az `EMPLOYEES` táblára, mivel az egyedüli attribútum, amin keresztül tranzitív függőség léphet fel az az
+`email`, viszont az `email` feltételezhetően egyedi, így az kulcs is lehetne. Ebből következik, hogy az `email` $\rightarrow$
+`employee_id` függés fenn áll.
+A `3NF` teljesül a `DEPARTMENTS`, `DIVISIONS` és `PROJECTS` táblára. Hasonlóan az `EMPLOYEE` táblához, ezeknél csak a `name` attribútumon keresztül
+vezethet tranzitív függés, viszont a `name` $\rightarrow$ `department_id`, `name` $\rightarrow$ `division_id` és 
+`name` $\rightarrow$ `project_id` függések fennállnak, mivel a `name` attribútum egyedi mindegyik esetben.
+A `WORKS_AT` tábla is `3NF`-ben van, mivel mindkét másodlagos attribútuma csak az elsődleges kulcstól függ.
+A `WORKS_ON` tábla is `3NF`-ben van, mivel csak egy darab másdolagos attribútuma van, 
+így nem jöhet létre tranzitív függés másodlagos attribútumok között.
+
+ 
+# Táblatervek
+\vspace{-0.8cm}
 \noindent\rule{\textwidth}{0.4pt}
 
-# Összetett lekérdezés
 
+# Összetett lekérdezés
+\vspace{-0.8cm}
 \noindent\rule{\textwidth}{0.4pt}
 
 # Megvalósítás, funkciók
-
+\vspace{-0.8cm}
 \noindent\rule{\textwidth}{0.4pt}
